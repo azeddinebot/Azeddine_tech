@@ -1,8 +1,9 @@
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
 
-// استيراد أوامر
-const handleStart = require('./commands/start');
+// استيراد الأوامر
+const startCommand = require('./commands/start');
+const fbCommand = require('./commands/fb');
 
 const client = new Client({
   authStrategy: new LocalAuth()
@@ -17,7 +18,12 @@ client.on('ready', () => {
 });
 
 client.on('message', async message => {
-  handleStart(message, client);
+  if (message.body.startsWith('/start')) {
+    startCommand(message, client);
+  }
+  else if (message.body.startsWith('.fb')) {
+    fbCommand(message, client);
+  }
 });
 
 client.initialize();
