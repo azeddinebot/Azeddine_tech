@@ -6,7 +6,11 @@ const startCommand = require('./commands/start');
 const fbCommand = require('./commands/fb');
 
 const client = new Client({
-  authStrategy: new LocalAuth()
+  authStrategy: new LocalAuth(),
+  puppeteer: {
+    headless: true,
+    args: ['--no-sandbox', '--disable-setuid-sandbox']
+  }
 });
 
 client.on('qr', qr => {
@@ -20,10 +24,17 @@ client.on('ready', () => {
 client.on('message', async message => {
   if (message.body.startsWith('/start')) {
     startCommand(message, client);
-  }
-  else if (message.body.startsWith('.fb')) {
+  } else if (message.body.startsWith('.fb')) {
     fbCommand(message, client);
   }
 });
 
 client.initialize();
+```
+
+✅ الإضافة المهمة:
+```js
+puppeteer: {
+  headless: true,
+  args: ['--no-sandbox', '--disable-setuid-sandbox']
+}
