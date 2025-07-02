@@ -30,11 +30,3 @@ client.on('message', async message => {
 });
 
 client.initialize();
-```
-
-✅ الإضافة المهمة:
-```js
-puppeteer: {
-  headless: true,
-  args: ['--no-sandbox', '--disable-setuid-sandbox']
-}
